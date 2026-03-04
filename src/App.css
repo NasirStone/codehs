@@ -1,42 +1,760 @@
+:root {
+  color-scheme: dark;
+}
+
+/* Fullscreen + kill Vite starter centering/constraining */
+html,
+body,
 #root {
-  max-width: 1280px;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: block;
+  background: rgba(2, 6, 23, 1);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
+
+#root {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.page {
+  min-height: 100svh;
+  width: 100%;
+  color: rgba(226, 232, 240, 0.96);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle overlay texture (NO vignette frame) */
+.page::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      900px 520px at 12% 18%,
+      rgba(255, 255, 255, 0.05),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 520px at 88% 22%,
+      rgba(255, 255, 255, 0.04),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 520px at 46% 90%,
+      rgba(0, 0, 0, 0.16),
+      transparent 55%
+    );
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
+
+.wrap {
+  width: min(1400px, calc(100% - 2rem));
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 1.25rem 0;
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.kicker {
+  font-size: 0.95rem;
+  opacity: 0.78;
+  letter-spacing: 0.3px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.h1 {
+  margin: 0.25rem 0 0.35rem;
+  font-size: 2.05rem;
+  letter-spacing: -0.3px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.sub {
+  opacity: 0.78;
+  max-width: 760px;
+}
+
+.topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.top-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .card {
-  padding: 2em;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 180ms ease,
+    filter 180ms ease,
+    opacity 220ms ease;
 }
 
-.read-the-docs {
-  color: #888;
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 850;
+  letter-spacing: 0.2px;
+}
+
+.card-dim {
+  opacity: 0.68;
+  filter: saturate(0.9);
+}
+
+.card-dim:hover {
+  opacity: 0.92;
+  filter: saturate(1.05);
+}
+
+.header-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.ui-hot {
+  animation: hotPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes hotPulse {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.15);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+.pulse {
+  animation: hotPulse 1.6s ease-in-out infinite;
+}
+
+/* New layout: top legend strip + main grid */
+.topStrip {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .topStrip {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Single context box (replaces the 3 legend tiles) */
+.contextBox {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 16px;
+  padding: 0.85rem 0.95rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.contextTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.contextTitle {
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+
+.contextSubtitle {
+  margin-top: 0.25rem;
+  opacity: 0.78;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.contextPills {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.contextBody {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+@media (max-width: 980px) {
+  .contextBody {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contextLabel {
+  font-weight: 900;
+  opacity: 0.9;
+  margin-bottom: 0.18rem;
+}
+
+.contextText {
+  opacity: 0.78;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.contextTip {
+  opacity: 0.78;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+  padding-top: 0.55rem;
+}
+
+.quickRow2 {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.mainGrid {
+  margin-top: 0.85rem;
+  display: grid;
+  grid-template-columns: 1.35fr 0.85fr;
+  gap: 1rem;
+  align-items: start;
+  flex: 1;
+}
+
+@media (max-width: 980px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .quickRow2 {
+    justify-content: flex-start;
+  }
+}
+
+.mainLeft,
+.mainRight {
+  min-height: 0;
+}
+
+.controls {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.label {
+  opacity: 0.78;
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+}
+
+.range-meta {
+  display: flex;
+  justify-content: space-between;
+  opacity: 0.75;
+  font-size: 0.85rem;
+}
+
+.range-mid {
+  font-weight: 900;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  align-items: stretch;
+}
+
+.hint {
+  opacity: 0.75;
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+}
+
+.add-task {
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  padding-top: 0.85rem;
+}
+
+.row4 {
+  display: grid;
+  grid-template-columns: 1.35fr 0.75fr 0.75fr auto;
+  gap: 0.55rem;
+  align-items: center;
+  margin-top: 0.45rem;
+}
+
+@media (max-width: 980px) {
+  .row4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+input,
+select {
+  width: 100%;
+  box-sizing: border-box;
+  height: 42px;
+  padding: 0.55rem 0.7rem;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(2, 6, 23, 0.55);
+  color: rgba(226, 232, 240, 0.95);
+  outline: none;
+  line-height: 1.1;
+  transition:
+    filter 140ms ease,
+    transform 140ms ease;
+}
+
+input:hover,
+select:hover {
+  filter: brightness(1.08);
+}
+
+input:focus,
+select:focus {
+  filter: brightness(1.12);
+}
+
+.graph-shell {
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(2, 6, 23, 0.35);
+  overflow: hidden;
+  margin-bottom: 0.85rem;
+  height: 280px;
+  display: grid;
+  align-items: center;
+}
+
+.cpu-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.cpu-row {
+  padding: 0.8rem;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(2, 6, 23, 0.38);
+  display: grid;
+  gap: 0.55rem;
+}
+
+.cpu-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.cpu-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.cpu-name {
+  font-weight: 900;
+}
+
+.cpu-right {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.timeline {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(7px, 1fr);
+  gap: 2px;
+  height: 28px;
+  align-items: stretch;
+}
+
+.task-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.task-row {
+  padding: 0.8rem;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(2, 6, 23, 0.38);
+  display: grid;
+  gap: 0.55rem;
+}
+
+.task-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.task-meter {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  opacity: 0.82;
+  font-size: 0.85rem;
+}
+
+.strong {
+  font-weight: 900;
+}
+
+.bar-shell {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(2, 6, 23, 0.55);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: rgba(59, 130, 246, 0.82);
+}
+
+.empty-hint {
+  padding: 0.95rem 0.95rem;
+  border-radius: 14px;
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  color: rgba(226, 232, 240, 0.78);
+  background: rgba(2, 6, 23, 0.35);
+}
+
+button {
+  box-sizing: border-box;
+}
+
+/* Reserve space so Coach <-> Explain doesn't reflow the card */
+.explain-slot {
+  min-height: 150px;
+  margin-bottom: 0.85rem;
+  display: grid;
+  align-items: start;
+}
+
+/* Coach layout */
+.coach {
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  background: rgba(59, 130, 246, 0.08);
+  border-radius: 16px;
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.coachTitle {
+  font-weight: 950;
+}
+
+.coachSub {
+  opacity: 0.82;
+  line-height: 1.35;
+}
+
+.coachActions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.coach-compact {
+  padding: 0.65rem 0.8rem;
+}
+
+/* Explanation panel */
+.explain {
+  border-radius: 16px;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(2, 6, 23, 0.35);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.explain-good {
+  border-color: rgba(34, 197, 94, 0.34);
+  background: rgba(34, 197, 94, 0.07);
+}
+
+.explain-warn {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.explain-bad {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.explain-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.explain-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.explain-title {
+  font-weight: 950;
+}
+
+/* Make the body 3 columns on desktop so it doesn't become a long paragraph */
+.explain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (max-width: 980px) {
+  .explain-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.explain-cell {
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  background: rgba(2, 6, 23, 0.25);
+  border-radius: 14px;
+  padding: 0.65rem 0.7rem;
+}
+
+.explain-label {
+  font-weight: 900;
+  opacity: 0.9;
+  margin-bottom: 0.2rem;
+}
+
+.explain-text {
+  opacity: 0.84;
+  line-height: 1.35;
+}
+
+.explain-task {
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+  padding-top: 0.6rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.explain-task-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.explain-tip {
+  opacity: 0.72;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+/* Compact close button that doesn't blow up layout */
+.xbtn {
+  height: 36px;
+  width: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(148, 163, 184, 0.1);
+  color: rgba(226, 232, 240, 0.95);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+}
+
+.xbtn:hover {
+  filter: brightness(1.12);
+}
+
+/* Presets + Play controls box (matches contextBox style) */
+.quickBox {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 16px;
+  padding: 0.85rem 0.95rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.quickTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.quickTitle {
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+
+.quickPills {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.quickTip {
+  opacity: 0.78;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+  padding-top: 0.55rem;
+}
+
+/* Ensure the row spans the full inner width of the box */
+.quickRow2 {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Right-align Play/Step/Reset to the right edge of the box */
+.playGroup {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 980px) {
+  .playGroup {
+    margin-left: 0;
+  }
+}
+
+/* Top CFS explanation box */
+.cfsBox {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 0.85rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.cfsTitle {
+  font-weight: 950;
+  letter-spacing: 0.2px;
+}
+
+.cfsText {
+  opacity: 0.82;
+  line-height: 1.35;
+  font-size: 0.9rem;
+}
+
+.cfsLink {
+  font-size: 0.9rem;
+  color: rgba(96, 165, 250, 0.95);
+  text-decoration: none;
+}
+
+.cfsLink:hover {
+  text-decoration: underline;
 }
