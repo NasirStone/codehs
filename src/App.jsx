@@ -1112,8 +1112,8 @@ export default function App() {
               <div>
                 <div className="contextLabel">Entanglement</div>
                 <div className="contextText">
-                  The arc links two CPUs. When linked, they should the same uid
-                  color. Different colors means the lock is broken.
+                  The arc links two CPUs. When linked, they should be the same
+                  uid color. Different colors means the lock is broken.
                 </div>
               </div>
               <div>
